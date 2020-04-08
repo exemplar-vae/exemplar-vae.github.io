@@ -16,8 +16,8 @@
 <!doctype html>
 
 <head>
-  <script src="template.v2.js"></script>
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="https://distill.pub/template.v2.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta charset="utf8">
 </head>
 
@@ -30,7 +30,7 @@
     "authors": [
       {
         "author":"Sajad Norouzi",
-        "authorURL":"http://sajadn.github.io",
+        "authorURL":"http://www.cs.toronto.edu/~sajadn/",
         "affiliations": [{"name": "University of Toronto", "url": "http://www.cs.toronto.edu"}]
       },
       {
@@ -57,20 +57,27 @@
   </d-title>
   <d-byline></d-byline>
   <d-article>
-    <figure class="l-body" style="margin: 0;"><img src="exemplar-vae.svg" style="width:70%" /></figure>
+    <figure style="grid-column: page">
+        <img src="exemplar-vae-generation.svg" style="margin: 0;"/>
+    </figure>
     <!-- <a class="marker" href="#section-1" id="section-1"><span>1</span></a> -->
     <h2>Motivation</h2>
 
+        <figure style="grid-column: kicker  ">
+            <img src="water_lilies.jpg" style="width: 100%; max-width: 204px; margin-top: 1rem;"/>
+              <figcaption> The first image in google search result. Nice job!</figcaption>
+        </figure>
     <p>
       Consider the problem of conditional image generation, given a natural
-      language description of a scene such as<br/>
-      ``A woman is staring at Monet's Water Lilies''.</br>
+      language description of a scene such as:
+        <br/> ''A woman is staring at Monet's Water Lilies''.</br>
       There are two general classes of methods for addressing this problem.
-      One can resort to <em>exemplar based methods</em>, e.g., using web search engines to 
+      One can resort to <em>exemplar based methods</em>, e.g., using web search engines to
       <a href="https://www.google.ca/search?tbm=isch&q=a+woman+is+staring+at+monet%27s+water+lilies&oq=a+woman+staring+at+Monet\%27s+Water+Lilies">retrieve photographs with similar captions</a>,
       and then editing the retrieved images to generate new ones.
       Alternatively, one can adopt <em>parametric models</em> such as deep neural
-      networks optimized for text to image translation to synthesize new relevant scenes.</p>
+      networks optimized for text to image translation to synthesize new relevant scenes.
+    </p>
 
     <p>
       This paper presents a probabilistic framework for exemplar based
@@ -79,191 +86,43 @@
       in a principled way and achieves superior results. We focus on simple
       unconditional generation tasks here, but the learning formulation and
       the methods developed are applicable to other applications including
-      text to image translation and language modeling.</p>
+      text to image translation and language modeling.
+    </p>
 
     <p>
-Exemplar based methods depend on large and diverse datasets of
-exemplars and relatively simple machine learning algorithms, such as
-Parzen window
-estimation <d-cite bibtex-key="parzen1962estimation"></d-cite> and
-conditional random fields <d-cite bibtex-key="lafferty2001conditional">. They deliver
-impressive results on texture synthesis~\cite{efros1999texture}, image
-super resolution \cite{freeman2002example}, and
-inpaiting~\cite{criminisi2003object, hays2007scene}, despite their
-simplicity.  These techniques can accommodate web scale datasets with
-a improvement in sample quality as the dataset size increases, without
-the need for further optimization of model parameters. The success of
-exemplar based methods hinges on the distance metric used to build a
-local density model for each neighborhood. Unfortunately, finding an
-effective distance metric in a high dimensional space is challenging
-on its own~\cite{xing2003distance, johnson2016perceptual}. Further,
-while exemplar based methods excel in interpolation tasks, they often
-underperform their parametric counterparts in extrapolation.</p>
-
-Parametric generative models based on deep neural nets enable learning
-complex data distributions across myriad problem
-domains~(e.g., \citet{oord2016wavenet, reed2016generative}).
- Predominant models, such as Variational Autoencoders
-(VAEs)~\cite{kingma2013auto,rezende2014stochastic}, Normalizing
-Flows~\cite{dinh2014nice, dinh2016density}, and Generative Adversarial
-Networks (GANs)~\cite{goodfellow2014generative}, adopt a decoder
-network to convert samples from a prior distribution, often a factored
-Gaussian, into samples from the target distribution.  After the
-completion of training, these models discard the training data and
-generate new samples using decoder networks alone. Hence, the burden
-of generative modeling rests entirely on the parametric
-model. Further, with the availability of additional training data,
-these models require re-training or fine-tuning.  %potentially
-
-This paper investigates a general framework for {\em exemplar
-based generative modeling} and a particular instantiation of this
-framework called the {\em Exemplar VAE}.  
-To sample from the Exemplar VAE, one first draws a random exemplar from
-a training dataset and then stochastically transforms that exemplar into
-a new observation. We are inspired by recent work on generative models augmented
-with external memory (e.g., \citet{guu2018generating, li2019forest,
-tomczak2017vae, khandelwal2019generalization,
-bornschein2017variational}), but unlike most existing work, we do not
-rely on a prespecified distance metric to define the neighborhood
-structure. Instead, we simultaneously learn a latent space and a
-distance metric suited for generative modeling.
-
-Exemplar VAE can be interpreted as a VAE with a Gaussian mixture
-prior in the latent space, with one component per exemplar.
-% number of components determined by the number of exemplars. 
-The component means are defined by the latent encoding of the exemplars. 
-We build on the VampPrior formulation of~\citet{tomczak2017vae},
-and our work is a continuation of recent papers on enhancing VAEs 
-with richer latent priors~\cite{kunin2019loss, bauer2018resampled, lawson2019energy}.
-
-The main contributions of this paper include:
-\vspace*{-.15cm}
-\begin{itemize}[topsep=0pt, partopsep=0pt, leftmargin=15pt, parsep=0pt, itemsep=1pt]
-\item The development of the Exemplar VAE and a framework for exemplar based generative modeling.
-\item The proposal of critical regularization methods, enhancing generalization of exemplar based generative models.
-\item The use of approximate nearest neighbor search to formulate a lower bound on ELBO to accelerate learning.
-\end{itemize}
-\vspace*{-.15cm} Our experiments demonstrate that Exemplar VAEs
-consistently outperform VAEs with a Guassian prior and a VampPrior on
-density estimation and represenation learning.  Further, unsupervised
-data augmentation using Exemplar VAEs proves to be extremely
-helpful, resulting in a classification error rate of $0.69\%$ on
-permutation invariant MNIST.
-
-    
-    <p>Before diving in: if you haven’t encountered t-SNE before, here’s what you need to know about the math behind it.
-      The goal is to take a set of points in a high-dimensional space and find a faithful representation of those points
-      in a lower-dimensional space, typically the 2D plane. The algorithm is non-linear and adapts to the underlying
-      data, performing different transformations on different regions. Those differences can be a major source of
-      confusion.</p>
-    <p>This is the first paragraph of the article. Test a long&thinsp;&mdash;&thinsp;dash -- here it is.</p>
-    <p>Test for owner's possessive. Test for "quoting a passage." And another sentence. Or two. Some flopping fins; for
-      diving.</p>
-    <aside>Some text in an aside, margin notes, etc...</aside>
-    <p>Here's a test of an inline equation <d-math>c = a^2 + b^2</d-math>. Also with configurable katex standards just
-      using inline '$' signs: $$x^2$$ And then there's a block equation:</p>
-    <d-math block>
-      c = \pm \sqrt{ \sum_{i=0}^{n}{a^{222} + b^2}}
-    </d-math>
-    <p>Math can also be quite involved:</p>
-    <d-math block>
-      \frac{1}{\Bigl(\sqrt{\phi \sqrt{5}}-\phi\Bigr) e^{\frac25 \pi}} = 1+\frac{e^{-2\pi}} {1+\frac{e^{-4\pi}}
-      {1+\frac{e^{-6\pi}} {1+\frac{e^{-8\pi}} {1+\cdots} } } }
-    </d-math>
-    <a class="marker" href="#section-1.1" id="section-1.1"><span>1.1</span></a>
-    <h3>Citations</h3>
-    <p>
-      <d-slider style="width: 200px;"></d-slider>
-    </p>
-    <p>We can<d-cite bibtex-key="mercier2011humans"></d-cite> also cite <d-cite
-        key="gregor2015draw,mercier2011humans,openai2018charter"></d-cite> external publications. <d-cite
-        key="dong2014image,dumoulin2016guide,mordvintsev2015inceptionism"></d-cite>. We should also be testing footnotes
-      <d-footnote>This will become a hoverable footnote. This will become a hoverable footnote. This will become a
-        hoverable footnote. This will become a hoverable footnote. This will become a hoverable footnote. This will
-        become a hoverable footnote. This will become a hoverable footnote. This will become a hoverable footnote.
-      </d-footnote>. There are multiple footnotes, and they appear in the appendix<d-footnote>Given I have coded them
-        right. Also, here's math in a footnote: <d-math>c = \sum_0^i{x}</d-math>. Also, a citation. Box-ception<d-cite
-          key='gregor2015draw'></d-cite>!</d-footnote> as well.</p>
-    <a class="marker" href="#section-2" id="section-2"><span>2</span></a>
-    <h2>Displaying code snippets</h2>
-    <p>Some inline javascript:<d-code language="javascript">var x = 25;</d-code>. And here's a javascript code block.
-    </p>
-    <d-code block language="javascript">
-      var x = 25;
-      function(x){
-      return x * x;
-      }
-    </d-code>
-    <p>We also support python.</p>
-    <d-code block language="python">
-      # Python 3: Fibonacci series up to n
-      def fib(n):
-      a, b = 0, 1
-      while a < n: print(a, end=' ' ) a, b=b, a+b </d-code>
-        <p>And a table</p>
-        <table>
-          <thead>
-            <tr>
-              <th>First</th>
-              <th>Second</th>
-              <th>Third</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>23</td>
-              <td>654</td>
-              <td>23</td>
-            </tr>
-            <tr>
-              <td>14</td>
-              <td>54</td>
-              <td>34</td>
-            </tr>
-            <tr>
-              <td>234</td>
-              <td>54</td>
-              <td>23</td>
-            </tr>
-          </tbody>
-        </table>
-        <d-figure id="last-figure"></d-figure>
-        <script>
-          const figure = document.querySelector("d-figure#last-figure");
-          const initTag = document.createElement("span");
-          initTag.textContent = "initialized!"
-          figure.appendChild(initTag);
-          figure.addEventListener("ready", function () {
-            const initTag = figure.querySelector("span");
-            initTag.textContent = "ready"
-            console.log('ready')
-          });
-          figure.addEventListener("onscreen", function () {
-            const initTag = figure.querySelector("span");
-            initTag.textContent = "onscreen"
-            console.log('onscreen')
-          });
-          figure.addEventListener("offscreen", function () {
-            const initTag = figure.querySelector("span");
-            initTag.textContent = "offscreen!"
-            console.log('offscreen')
-          });
-        </script>
-        <p>That's it for the example article!</p>
+        Exemplar based methods depend on large and diverse datasets of
+        exemplars and relatively simple machine learning algorithms, such as
+        Parzen window
+        estimation <d-cite key="parzen1962estimation"></d-cite> and
+        conditional random fields <d-cite key="lafferty2001conditional"></d-cite>. They deliver
+        impressive results on texture synthesis <d-cite key="efros1999texture"></d-cite>, image
+        super resolution <d-cite key="freeman2002example"></d-cite>, and
+        inpaiting <d-cite key="criminisi2003object, hays2007scene"></d-cite>, despite their
+        simplicity.  These techniques can accommodate web scale datasets with
+        a improvement in sample quality as the dataset size increases, without
+        the need for further optimization of model parameters. The success of
+        exemplar based methods hinges on the distance metric used to build a
+        local density model for each neighborhood. Unfortunately, finding an
+        effective distance metric in a high dimensional space is challenging
+        on its own <d-cite key="xing2003distance, johnson2016perceptual"></d-cite>. Further,
+        while exemplar based methods excel in interpolation tasks, they often
+        underperform their parametric counterparts in extrapolation.</p>
 
   </d-article>
 
   <d-appendix>
 
-    <h3>Contributions</h3>
-    <p>Some text describing who did what.</p>
-    <h3>Reviewers</h3>
-    <p>Some text with links describing who reviewed the article.</p>
+      <h3>Contributions</h3>
+      <p>Some text describing who did what.</p>
+      <h3>Reviewers</h3>
+      <p>Some text with links describing who reviewed the article.</p>
 
-    <d-bibliography src="bibliography.bib">
-    </d-bibliography>
+      <d-bibliography src="https://raw.githubusercontent.com/exemplar-vae/exemplar-vae.github.io/master/bibliography.bib">
+      </d-bibliography>
   </d-appendix>
 
-  <distill-footer></distill-footer>
+  <distill-footer>
+
+  </distill-footer>
 
 </body>
