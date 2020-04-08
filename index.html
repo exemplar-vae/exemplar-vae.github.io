@@ -18,7 +18,9 @@
 <head>
 <script src="https://distill.pub/template.v2.js"></script>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta charset="utf8">
+    <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+    <meta charset="utf8">
 </head>
 
 <body>
@@ -53,7 +55,7 @@
   }</script>
   </d-front-matter>
   <d-title>
-    <p>An exemplar based generative model useful for density estimation, representation learning, and generative data augmentation</p>
+    <p>An exemplar based generative model useful for density estimation, representation learning, and generative data augmentation <a href='https://github.com/sajadn/Exemplar-VAE'>[code]</a> </p>
   </d-title>
   <d-byline></d-byline>
   <d-article>
@@ -61,6 +63,9 @@
         <img src="exemplar-vae-generation.svg" style="margin: 0;"/>
     </figure>
     <!-- <a class="marker" href="#section-1" id="section-1"><span>1</span></a> -->
+      <d-contents>
+
+      </d-contents>
     <h2>Motivation</h2>
 
         <figure style="grid-column: kicker  ">
@@ -78,17 +83,6 @@
       Alternatively, one can adopt <em>parametric models</em> such as deep neural
       networks optimized for text to image translation to synthesize new relevant scenes.
     </p>
-
-    <p>
-      This paper presents a probabilistic framework for exemplar based
-      generative modeling using expressive neural nets. This framework
-      combines the advantages of both exemplar based and parametric methods
-      in a principled way and achieves superior results. We focus on simple
-      unconditional generation tasks here, but the learning formulation and
-      the methods developed are applicable to other applications including
-      text to image translation and language modeling.
-    </p>
-
     <p>
         Exemplar based methods depend on large and diverse datasets of
         exemplars and relatively simple machine learning algorithms, such as
@@ -98,25 +92,187 @@
         impressive results on texture synthesis <d-cite key="efros1999texture"></d-cite>, image
         super resolution <d-cite key="freeman2002example"></d-cite>, and
         inpaiting <d-cite key="criminisi2003object, hays2007scene"></d-cite>, despite their
-        simplicity.  These techniques can accommodate web scale datasets with
+        simplicity. These techniques can accommodate web scale datasets with
         a improvement in sample quality as the dataset size increases, without
         the need for further optimization of model parameters. The success of
         exemplar based methods hinges on the distance metric used to build a
-        local density model for each neighborhood. Unfortunately, finding an
-        effective distance metric in a high dimensional space is challenging
-        on its own <d-cite key="xing2003distance, johnson2016perceptual"></d-cite>. Further,
+        local density model for each neighborhood. Further,
         while exemplar based methods excel in interpolation tasks, they often
-        underperform their parametric counterparts in extrapolation.</p>
+        underperform their parametric counterparts in extrapolation.
+    </p>
+      <p>
+        Parametric generative models based on deep neural nets enable learning
+        complex data distributions across myriad problem
+        domains (e.g., <d-cite key="oord2016wavenet, reed2016generative"></d-cite>).
+        Predominant models, such as Variational Autoencoders
+        (VAEs)<d-cite key="kingma2013auto,rezende2014stochastic"></d-cite>, Normalizing
+        Flows<d-cite key="dinh2014nice, dinh2016density"></d-cite>, and Generative Adversarial
+        Networks (GANs) <d-cite key="goodfellow2014generative"></d-cite>, adopt a decoder
+        network to convert samples from a prior distribution, often a factored
+        Gaussian, into samples from the target distribution.  After the
+        completion of training, these models discard the training data and
+        generate new samples using decoder networks alone. Hence, the burden
+        of generative modeling rests entirely on the parametric
+        model. Further, with the availability of additional training data,
+        these models require re-training or fine-tuning.
+    </p>
+      <p>
+      This work presents a probabilistic framework for exemplar based
+      generative modeling using expressive neural nets. This framework
+      combines the advantages of both exemplar based and parametric methods
+      in a principled way and achieves superior results. We focus on simple
+      unconditional generation tasks here, but the learning formulation and
+      the methods developed are applicable to other applications including
+      text to image translation and language modeling.
+    </p>
+    <!--<p>-->
+        <!--This paper investigates a general framework for <em> exemplar-->
+        <!--based generative modeling </em> and a particular instantiation of this-->
+        <!--framework called the <em> Exemplar VAE </em>.-->
+        <!--To sample from the Exemplar VAE, one first draws a random exemplar from-->
+        <!--a training dataset and then stochastically transforms that exemplar into-->
+        <!--a new observation. We are inspired by recent work on generative models augmented-->
+        <!--with external memory (e.g., <d-cite key="guu2018generating, li2019forest,-->
+        <!--tomczak2017vae, khandelwal2019generalization,-->
+        <!--bornschein2017variational"></d-cite>), but unlike most existing work, we do not-->
+        <!--rely on a prespecified distance metric to define the neighborhood-->
+        <!--structure. Instead, we simultaneously learn a latent space and a-->
+        <!--distance metric suited for generative modeling.-->
+    <!--</p>-->
+    <!--<p>-->
+        <!--Exemplar VAE can be interpreted as a VAE with a Gaussian mixture-->
+        <!--prior in the latent space, with one component per exemplar.-->
+        <!--The component means are defined by the latent encoding of the exemplars.-->
+        <!--We build on the VampPrior formulation of<d-cite key="tomczak2017vae"></d-cite>,-->
+        <!--and our work is a continuation of recent papers on enhancing VAEs-->
+        <!--with richer latent priors<d-cite key="kunin2019loss, bauer2018resampled, lawson2019energy"></d-cite>.-->
+    <!--</p>-->
+      <!--The main contributions of this paper include:-->
+        <!--\vspace*{-.15cm}-->
+        <!--\begin{itemize}[topsep=0pt, partopsep=0pt, leftmargin=15pt, parsep=0pt, itemsep=1pt]-->
+        <!--\item The development of the Exemplar VAE and a framework for exemplar based generative modeling.-->
+        <!--\item The proposal of critical regularization methods, enhancing generalization of exemplar based generative models.-->
+        <!--\item The use of approximate nearest neighbor search to formulate a lower bound on ELBO to accelerate learning.-->
+        <!--\end{itemize}-->
+        <!--\vspace*{-.15cm} Our experiments demonstrate that Exemplar VAEs-->
+        <!--consistently outperform VAEs with a Guassian prior and a VampPrior on-->
+        <!--density estimation and represenation learning.  Further, unsupervised-->
+        <!--data augmentation using Exemplar VAEs proves to be extremely-->
+        <!--helpful, resulting in a classification error rate of $0.69\%$ on-->
+        <!--permutation invariant MNIST.-->
+    <h2>Exemplar Generative Model</h2>
+    <p>
+        \(
+            \renewcommand{\vec}[1]{\boldsymbol{\mathbf{#1}}}
+            \def\expected{\mathbb{E}}
+            \def\t{T}
+            \def\x{\vec{x}}
+            \def\z{\vec{z}}
+            \def\eg{{e.g.,} ~}
+            \def\ie{{i.e.,} ~}
+            \newcommand{\one}[1]{{1}_{[#1]}}
+
+        \)
+        We define an exemplar based generative model in terms of a dataset of
+        \(N\) exemplars, \(X \equiv \{\x_n\}_{n=1}^N\), and a parametric transition
+        distribution, \(\t_\theta(\x \mid \x')\), which stochastically transforms
+        an exemplar \(\x'\) into a new observation \(\x\). The log density of a data point
+        \(x\) under an exemplar based generative model \(\{X, \t_\theta\}\) is expressed as
+        \begin{equation}
+        \log p(\x \mid X, \theta) ~=~ \log \sum\nolimits_{n=1}^N\frac{1}{N} \t_\theta(\x \mid \x_n) ~,
+        \label{eq:exgen}
+        \end{equation}
+        where we assume the prior probability of selecting each exemplar is uniform.
+        The transition distribution \(\t_\theta(\x \mid \x')\) can be defined using any expressive
+        parametric generative model, including VAEs, Normalizing Flow and auto-regressive models.
+
+        Consistent with recent work <d-cite key="tomczak2017vae, bornschein2017variational"></d-cite>, we
+        find that simply maximizing the expected log marginal likelihood over the
+        empirical training data,
+        \begin{equation}
+        O(\theta; X) ~=~ %\frac{1}{N}
+        \sum\nolimits_{i=1}^N \log \sum\nolimits_{n=1}^N \frac{~1~}{N}\,\t_\theta(\x_i \mid \x_n) ~,
+        \end{equation}
+        to find the parameters of the transition distribution (\(\theta\)) results in massive overfitting.
+        This is not surprising, since a flexible transition distribution can put all its probability mass
+        on the reconstruction of each exemplar, \(\ie\) \(p(\x \mid \x)\), yielding high log-likelihood on training
+        data but poor generalization.
+
+        We propose two simple but effective regularization strategies to mitigate
+        overfitting in exemplar based generative models:
+    </p>
+      <h3>Leave-one-out  during  training</h3>
+      <p>
+      The generation of a given data point is expressed
+        in terms of all exemplars except that point. The non-parametric nature of the generative
+        model enables easy adoption of such a leave-one-out (LOO) objective during training,
+        to optimize
+        \begin{equation}
+        O_1(\theta; X) ~=~ %\frac{1}{N}
+        \sum_{i=1}^N \log \sum_{n=1}^N \frac{\one{i \neq n}}{N\!-\!1} \t_\theta(\x_i \mid \x_n)~,
+        \end{equation}
+        where \(\one{i \neq n} \in \{0, 1\}\) is an indicator function taking
+        the value of 1 if and only if \(i \neq n\).
+      </p>
+      <h3>Exemplar subsampling during training</h3>
+      <p>
+        In addition to LOO, we observe that explaining a training point using a subset of
+        the remaining training exemplars improves generalization.
+        To that end we use a hyper-parameter \(M\) to define the exemplar subset size for the generative model.
+        To generate \(\x_i\) we draw \(M\) exemplar indices, denoted \(\pi \equiv \{\pi_m\}_{m=1}^M\),
+        uniformly at random from subsets of \(\{1, \ldots, i-1, i+1, \ldots, N\}\).
+        Let \(\pi \sim \Pi^{N,i}_{M}\) denote this sampling procedure with
+        (\(N\!-\!1\) choose \(M\)) possible subset outcomes.
+        Combining LOO and exemplar subsampling,
+        the objective takes the form\vspace*{-.1cm}
+        \begin{equation}
+        O_2(\theta; X) ~=~ %\frac{1}{N}
+        \sum_{i=1}^N \mathop{\expected~~~~~~~~~}_{\pi\sim~\Pi^{N,i}_{M}} \log \sum_{m=1}^M %\one{i \neq \pi_m}
+        \frac{1}{M} \t_\theta(\x_i \mid \x_{\pi_m}) ~.
+        \label{eq:obj2}
+        \end{equation}
+      </p>
+      <h2>Exemplar VAE</h2>
+      <p>
+      We present theExemplar VAE as an instance of neural exemplar based generative models,
+        in which the transition distribution in which the transition distribution \(\t(\x
+        \mid \x')\) is defined in terms of the encoder \(\tilde{q}_\phi\) and
+        the decoder \(p_\theta\) of a VAE
+        \begin{equation}
+        \t(\x \mid \x') ~=~ \int_z \tilde{q}_\phi(\z \mid \x') \,p_\theta(\x \mid \z)\, d\z~.
+        \end{equation}
+        The Exemplar VAE assumes that, given \(\z\), an observation \(\x\) is
+        conditionally independent from the associated exemplar \(\x'\). This
+        conditional independence assumption helps simplify the formulation,
+        enabling efficient optimization. Marginalizing out the exemplar index \(n\) and the latent variable \(\z\),
+        we derive an evidence lower bound (ELBO)
+      <d-cite key="jordan1999introduction,blei2017variational"></d-cite> on Exemplar VAE's
+        log marginal likelihood for a single data point \(\x\) as:
+        \begin{eqnarray}
+            &\log p(\x; X, \theta, \phi) \nonumber\\
+            &=~ \log \sum_{n=1}^N \frac{1}{N}\int_z {\tilde{q}_\phi(\z \mid \x_n) \,p_\theta(\x \mid \z)}\, d\z\\
+            &=~ \log \int_z {p_\theta(\x \mid \z)} \sum_{n=1}^N \frac{1}{N} \tilde{q}_\phi(\z \mid \x_n) \,d\z\\
+            &\ge \underbrace{\mathop{\expected}_{q_{\phi}(\z \mid \x)}\!\!\!
+            \log  p_{\theta}(\x\!\mid\!\z)}_{\mathrm{reconstruction}} - \!\!\underbrace{\mathop{\expected}_{q_{\phi}(\z \mid \x)}
+            \log \frac{N\, q_\phi(\z \mid \x)}{\sum\nolimits_{n=1}^N \tilde{q}_\phi(\z \mid \x_n)}}_{\mathrm{KL~term}}.
+            \label{eq:exVAE-ELBO}
+        \end{eqnarray}
+        The separation of the reconstruction and KL terms in summarizes the impact of the exemplars on the
+        learning objective as a mixture prior distribution in the latent
+        space, with each mixture component being defined using the latent
+        encoding of one exemplar
+        </p>
+
+  <figure style="grid-column: page">
+        <img src="exemplar-vae-training.png" style="margin: 0;"/>
+    </figure>
+
+
+
 
   </d-article>
 
   <d-appendix>
-
-      <h3>Contributions</h3>
-      <p>Some text describing who did what.</p>
-      <h3>Reviewers</h3>
-      <p>Some text with links describing who reviewed the article.</p>
-
       <d-bibliography src="https://raw.githubusercontent.com/exemplar-vae/exemplar-vae.github.io/master/bibliography.bib">
       </d-bibliography>
   </d-appendix>
