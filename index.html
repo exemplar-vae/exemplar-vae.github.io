@@ -224,7 +224,7 @@
         Let \(\pi \sim \Pi^{N,i}_{M}\) denote this sampling procedure with
         (\(N\!-\!1\) choose \(M\)) possible subset outcomes.
         Combining LOO and exemplar subsampling,
-        the objective takes the form\vspace*{-.1cm}
+        the objective takes the form
         \begin{equation}
         O_2(\theta; X) ~=~ %\frac{1}{N}
         \sum_{i=1}^N \mathop{\expected~~~~~~~~~}_{\pi\sim~\Pi^{N,i}_{M}} \log \sum_{m=1}^M %\one{i \neq \pi_m}
@@ -267,11 +267,68 @@
           <!--<figcaption> Training procedure of exemplar vae. The new prior distribution is mixture of gaussian where each mixture is latent embeding of a data point</figcaption>-->
         </figure>
       <h2>Experiments</h2>
+      <p>
+        To assess the effectiveness of Exemplar VAEs we conduct three sets of
+        experiments, on density estimation, represenation learning, and
+        unsupervised data augmentation.
+      </p>
+      <h3>
+          Density Estimation
+      </h3>
+      <p>
+        We report density estimation with MNIST, Omniglot and Fashion MNIST,
+        using three different architectures, namely VAE, HVAE and ConvHVAE \cite{tomczak2017vae}.
+        For each architecture we consider a Gaussian prior, the VampPrior, and an Exemplar based prior.
+        For training VAE and HVAE we used the exact exemplar prior, but for ConvHVAE we used
+        10NN exemplars (see paper for the details).
+      </p>
+     <figure  style="grid-column: text">
+        <img src="density_estimation.png" style="width: 100%; margin-top: 1rem;"/>
+          <figcaption> Density estimation on dynamic MNIST, Fashion MNIST, and Omniglot for different methods and architectures. Log likelihoodlower bounds (in nats) averaged across 5 training runs are estimated using IWAE with 5000 samples.  </figcaption>
+    </figure>
+      <h3>
+        Representation Learning
+      </h3>
+      <p>
+          We next explore the structure of the latent representation for Exemplar VAE.
+            Images below show a t-SNE visualization of the latent
+            representations of MNIST test data for the Exemaplar VAE and for VAE with a Gaussian prior.
 
+          <div  style="grid-column: text">
+                <img src="tsne-standard.png" style="width: 45%; margin-top: 1rem; margin-right: 8%;"/>
+              <img src="tsne-exemplar.png" style="width: 45%; margin-top: 1rem;"/>
+              <figcaption> t-SNE visualization of learned latent representations for MNIST test points, colored by labels. </figcaption>
+          </div>
+            Test points are colored by their digit label
+            (No labels were used during training). We also use k-nearest neighbor (kNN) classification
+            performance as a proxy for the representation quality.
+            Exemplar VAE consistently outperforms other approaches.
+            <figure style="grid-column: text">
+                <img src="knn_latent.png" style="width: 60%; margin-top: 1rem;display: block; margin-left: auto; margin-right: auto;"/>
+            </figure>
+      </p>
+      <h3>
+          Generative Data Augmentation
+      </h3>
+      <p>
+      We assess the effectiveness of the Exemplar VAE for generating augmented data to improve supervised learning.
+      Recent generative models have achieved impressive sample quality and diversity, but
+      they have seen limited success in improving discriminative models.
 
+      In our experiments we use the training data points as exemplars and generate additional samples from the Exemplar VAE.
+          Class labels of the exemplars are transferred to corresponding new images, and a combination of
+          real and generated data is used for training.
+      </p>
+      <figure  style="grid-column: text">
+          <img src="data_augmentation.png" style="width: 65%; margin-top: 1rem;display: block; margin-left: auto; margin-right: auto;"/>
+      </figure>
 
-
-
+      <h3>
+          Samples
+      </h3>
+      <figure  style="grid-column: text">
+          <img src="exemplar_generation.png" style="width: 100%; display: block; margin-left: auto; margin-right: auto;"/>
+      </figure>
 
 
   </d-article>
@@ -281,8 +338,5 @@
       </d-bibliography>
   </d-appendix>
 
-  <distill-footer>
-
-  </distill-footer>
 
 </body>
