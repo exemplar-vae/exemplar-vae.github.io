@@ -59,21 +59,25 @@
   }</script>
   </d-front-matter>
   <d-title>
-      <p>Linking Generative Models, Nearest Neighbor Retreival, and Data Augmentation <a href='https://github.com/sajadn/Exemplar-VAE'><b>[code]</b></a> </p>
+    <p>
+      Linking Generative Models, Nearest Neighbor Retreival, and Data Augmentation
+      <a href='https://github.com/sajadn/Exemplar-VAE'><b>[code]</b></a>
+      <a href='https://nips.cc/virtual/2020/public/poster_63c17d596f401acb520efe4a2a7a01ee.html'><b>[NeurIPS-2020 link]</b></a>
+    </p>
   </d-title>
   <d-byline></d-byline>
   <d-article>
 
     <!-- <a class="marker" href="#section-1" id="section-1"><span>1</span></a> -->
       <d-contents>
-        <img src="augmentation.gif" style="width: 67%; display: block; margin-left: auto;  margin-right: auto;"/>
-
+        <img src="exemplar-vae-generation.svg" style="width: 90%; display: block; margin-left: auto;  margin-right: auto;"/>	
+        <!-- <img src="augmentation.gif" style="width: 67%; display: block; margin-left: auto;  margin-right: auto;"/> -->
       </d-contents>
     <h2>Motivation</h2>
 
         <figure style="grid-column: kicker  ">
             <img src="water_lilies.jpg" style="width: 100%; max-width: 204px;"/>
-              <figcaption> First google search result. Nice job!</figcaption>
+              <figcaption> First google search result for ''A woman is staring at Monet's Water Lilies''. </figcaption>
         </figure>
     <p>
       Consider the problem of conditional image generation, given a natural
@@ -235,9 +239,9 @@
         \label{eq:obj2}
         \end{equation}
       </p>
-      <figure style="grid-column: page">
-        <img src="exemplar-vae-generation.svg" style="width: 80%; display: block; margin-left: auto;  margin-right: auto;"/>
-    </figure>
+      <!-- <figure style="grid-column: page"> -->
+      <!--   <img src="exemplar-vae-generation.svg" style="width: 80%; display: block; margin-left: auto;  margin-right: auto;"/> -->
+      <!-- </figure> -->
       <h2>Exemplar VAE</h2>
       <p>
       We present theExemplar VAE as an instance of neural exemplar based generative models,
@@ -273,6 +277,7 @@
           <!--&lt;!&ndash;<figcaption> Training procedure of exemplar vae. The new prior distribution is mixture of gaussian where each mixture is latent embeding of a data point</figcaption>&ndash;&gt;-->
         <!--</figure>-->
       <h2>Experiments</h2>
+      <img src="augmentation.gif" style="width: 40%; display: block; margin-left: auto;  margin-right: auto;"/>
       <img src="full_generation.png" style="width: 100%; margin-top: 1rem;"/>
 
       <p>
@@ -332,7 +337,7 @@
       </figure>
 
       <h3>
-          Samples
+          Exemplar-conditioned Samples
       </h3>
       <figure  style="grid-column: text">
           <img src="celebA_exemplar_generation.png" style="width: 100%; display: block; margin-left: auto; margin-right: auto;"/>
