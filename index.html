@@ -63,72 +63,71 @@
   </d-title>
   <d-byline></d-byline>
   <d-article>
-    <figure style="grid-column: page">
-        <img src="exemplar-vae-generation.svg" style="width: 67%; display: block; margin-left: auto;  margin-right: auto;"/>
-    </figure>
+
     <!-- <a class="marker" href="#section-1" id="section-1"><span>1</span></a> -->
       <d-contents>
+        <img src="augmentation.gif" style="width: 67%; display: block; margin-left: auto;  margin-right: auto;"/>
 
       </d-contents>
-    <h2>Motivation</h2>
+    <!--<h2>Motivation</h2>-->
 
-        <figure style="grid-column: kicker  ">
-            <img src="water_lilies.jpg" style="width: 100%; max-width: 204px;"/>
-              <figcaption> First google search result. Nice job!</figcaption>
-        </figure>
-    <p>
-      Consider the problem of conditional image generation, given a natural
-      language description of a scene such as:
-        <br/> ''A woman is staring at Monet's Water Lilies''.</br>
-      There are two general classes of methods for addressing this problem.
-      One can resort to <em>exemplar based methods</em>, e.g., using web search engines to
-      <a href="https://www.google.ca/search?tbm=isch&q=a+woman+is+staring+at+monet%27s+water+lilies&oq=a+woman+staring+at+Monet\%27s+Water+Lilies">retrieve photographs with similar captions</a>,
-      and then editing the retrieved images to generate new ones.
-      Alternatively, one can adopt <em>parametric models</em> such as deep neural
-      networks optimized for text to image translation to synthesize new relevant scenes.
-    </p>
-    <p>
-        Exemplar based methods depend on large and diverse datasets of
-        exemplars and relatively simple machine learning algorithms, such as
-        Parzen window
-        estimation <d-cite key="parzen1962estimation"></d-cite> and
-        conditional random fields <d-cite key="lafferty2001conditional"></d-cite>. They deliver
-        impressive results on texture synthesis <d-cite key="efros1999texture"></d-cite>, image
-        super resolution <d-cite key="freeman2002example"></d-cite>, and
-        inpaiting <d-cite key="criminisi2003object, hays2007scene"></d-cite>, despite their
-        simplicity. These techniques can accommodate web scale datasets with
-        a improvement in sample quality as the dataset size increases, without
-        the need for further optimization of model parameters. The success of
-        exemplar based methods hinges on the distance metric used to build a
-        local density model for each neighborhood. Further,
-        while exemplar based methods excel in interpolation tasks, they often
-        underperform their parametric counterparts in extrapolation.
-    </p>
-      <p>
-        Parametric generative models based on deep neural nets enable learning
-        complex data distributions across myriad problem
-        domains (e.g., <d-cite key="oord2016wavenet, reed2016generative"></d-cite>).
-        Predominant models, such as Variational Autoencoders
-        (VAEs)<d-cite key="kingma2013auto,rezende2014stochastic"></d-cite>, Normalizing
-        Flows<d-cite key="dinh2014nice, dinh2016density"></d-cite>, and Generative Adversarial
-        Networks (GANs) <d-cite key="goodfellow2014generative"></d-cite>, adopt a decoder
-        network to convert samples from a prior distribution, often a factored
-        Gaussian, into samples from the target distribution.  After the
-        completion of training, these models discard the training data and
-        generate new samples using decoder networks alone. Hence, the burden
-        of generative modeling rests entirely on the parametric
-        model. Further, with the availability of additional training data,
-        these models require re-training or fine-tuning.
-    </p>
-      <p>
-      This work presents a probabilistic framework for exemplar based
-      generative modeling using expressive neural nets. This framework
-      combines the advantages of both exemplar based and parametric methods
-      in a principled way and achieves superior results. We focus on simple
-      unconditional generation tasks here, but the learning formulation and
-      the methods developed are applicable to other applications including
-      text to image translation and language modeling.
-    </p>
+        <!--<figure style="grid-column: kicker  ">-->
+            <!--<img src="water_lilies.jpg" style="width: 100%; max-width: 204px;"/>-->
+              <!--<figcaption> First google search result. Nice job!</figcaption>-->
+        <!--</figure>-->
+    <!--<p>-->
+      <!--Consider the problem of conditional image generation, given a natural-->
+      <!--language description of a scene such as:-->
+        <!--<br/> ''A woman is staring at Monet's Water Lilies''.</br>-->
+      <!--There are two general classes of methods for addressing this problem.-->
+      <!--One can resort to <em>exemplar based methods</em>, e.g., using web search engines to-->
+      <!--<a href="https://www.google.ca/search?tbm=isch&q=a+woman+is+staring+at+monet%27s+water+lilies&oq=a+woman+staring+at+Monet\%27s+Water+Lilies">retrieve photographs with similar captions</a>,-->
+      <!--and then editing the retrieved images to generate new ones.-->
+      <!--Alternatively, one can adopt <em>parametric models</em> such as deep neural-->
+      <!--networks optimized for text to image translation to synthesize new relevant scenes.-->
+    <!--</p>-->
+    <!--<p>-->
+        <!--Exemplar based methods depend on large and diverse datasets of-->
+        <!--exemplars and relatively simple machine learning algorithms, such as-->
+        <!--Parzen window-->
+        <!--estimation <d-cite key="parzen1962estimation"></d-cite> and-->
+        <!--conditional random fields <d-cite key="lafferty2001conditional"></d-cite>. They deliver-->
+        <!--impressive results on texture synthesis <d-cite key="efros1999texture"></d-cite>, image-->
+        <!--super resolution <d-cite key="freeman2002example"></d-cite>, and-->
+        <!--inpaiting <d-cite key="criminisi2003object, hays2007scene"></d-cite>, despite their-->
+        <!--simplicity. These techniques can accommodate web scale datasets with-->
+        <!--a improvement in sample quality as the dataset size increases, without-->
+        <!--the need for further optimization of model parameters. The success of-->
+        <!--exemplar based methods hinges on the distance metric used to build a-->
+        <!--local density model for each neighborhood. Further,-->
+        <!--while exemplar based methods excel in interpolation tasks, they often-->
+        <!--underperform their parametric counterparts in extrapolation.-->
+    <!--</p>-->
+      <!--<p>-->
+        <!--Parametric generative models based on deep neural nets enable learning-->
+        <!--complex data distributions across myriad problem-->
+        <!--domains (e.g., <d-cite key="oord2016wavenet, reed2016generative"></d-cite>).-->
+        <!--Predominant models, such as Variational Autoencoders-->
+        <!--(VAEs)<d-cite key="kingma2013auto,rezende2014stochastic"></d-cite>, Normalizing-->
+        <!--Flows<d-cite key="dinh2014nice, dinh2016density"></d-cite>, and Generative Adversarial-->
+        <!--Networks (GANs) <d-cite key="goodfellow2014generative"></d-cite>, adopt a decoder-->
+        <!--network to convert samples from a prior distribution, often a factored-->
+        <!--Gaussian, into samples from the target distribution.  After the-->
+        <!--completion of training, these models discard the training data and-->
+        <!--generate new samples using decoder networks alone. Hence, the burden-->
+        <!--of generative modeling rests entirely on the parametric-->
+        <!--model. Further, with the availability of additional training data,-->
+        <!--these models require re-training or fine-tuning.-->
+    <!--</p>-->
+      <!--<p>-->
+      <!--This work presents a probabilistic framework for exemplar based-->
+      <!--generative modeling using expressive neural nets. This framework-->
+      <!--combines the advantages of both exemplar based and parametric methods-->
+      <!--in a principled way and achieves superior results. We focus on simple-->
+      <!--unconditional generation tasks here, but the learning formulation and-->
+      <!--the methods developed are applicable to other applications including-->
+      <!--text to image translation and language modeling.-->
+    <!--</p>-->
     <!--<p>-->
         <!--This paper investigates a general framework for <em> exemplar-->
         <!--based generative modeling </em> and a particular instantiation of this-->
@@ -236,14 +235,17 @@
         \label{eq:obj2}
         \end{equation}
       </p>
+      <figure style="grid-column: page">
+        <img src="exemplar-vae-generation.svg" style="width: 67%; display: block; margin-left: auto;  margin-right: auto;"/>
+    </figure>
       <h2>Exemplar VAE</h2>
       <p>
       We present theExemplar VAE as an instance of neural exemplar based generative models,
         in which the transition distribution in which the transition distribution \(\t(\x
-        \mid \x')\) is defined in terms of the encoder \(\tilde{q}_\phi\) and
+        \mid \x')\) is defined in terms of the encoder \(r_\phi\) and
         the decoder \(p_\theta\) of a VAE
         \begin{equation}
-        \t(\x \mid \x') ~=~ \int_z \tilde{q}_\phi(\z \mid \x') \,p_\theta(\x \mid \z)\, d\z~.
+        \t(\x \mid \x') ~=~ \int_z r_\phi(\z \mid \x') \,p_\theta(\x \mid \z)\, d\z~.
         \end{equation}
         The Exemplar VAE assumes that, given \(\z\), an observation \(\x\) is
         conditionally independent from the associated exemplar \(\x'\). This
@@ -254,11 +256,11 @@
         log marginal likelihood for a single data point \(\x\) as:
         \begin{eqnarray}
             &\log p(\x; X, \theta, \phi) \nonumber\\
-            &=~ \log \sum_{n=1}^N \frac{1}{N}\int_z {\tilde{q}_\phi(\z \mid \x_n) \,p_\theta(\x \mid \z)}\, d\z\\
-            &=~ \log \int_z {p_\theta(\x \mid \z)} \sum_{n=1}^N \frac{1}{N} \tilde{q}_\phi(\z \mid \x_n) \,d\z\\
+            &=~ \log \sum_{n=1}^N \frac{1}{N}\int_z {r_\phi(\z \mid \x_n) \,p_\theta(\x \mid \z)}\, d\z\\
+            &=~ \log \int_z {p_\theta(\x \mid \z)} \sum_{n=1}^N \frac{1}{N} r_\phi(\z \mid \x_n) \,d\z\\
             &\ge \underbrace{\mathop{\expected}_{q_{\phi}(\z \mid \x)}\!\!\!
             \log  p_{\theta}(\x\!\mid\!\z)}_{\mathrm{reconstruction}} - \!\!\underbrace{\mathop{\expected}_{q_{\phi}(\z \mid \x)}
-            \log \frac{N\, q_\phi(\z \mid \x)}{\sum\nolimits_{n=1}^N \tilde{q}_\phi(\z \mid \x_n)}}_{\mathrm{KL~term}}.
+            \log \frac{N\, q_\phi(\z \mid \x)}{\sum\nolimits_{n=1}^N r_\phi(\z \mid \x_n)}}_{\mathrm{KL~term}}.
             \label{eq:exVAE-ELBO}
         \end{eqnarray}
         The separation of the reconstruction and KL terms in summarizes the impact of the exemplars on the
@@ -266,11 +268,13 @@
         space, with each mixture component being defined using the latent
         encoding of one exemplar
         </p>
-      <figure style="grid-column: page">
-        <img src="exemplar-vae-training.png" style="margin: 0;"/>
-          <!--<figcaption> Training procedure of exemplar vae. The new prior distribution is mixture of gaussian where each mixture is latent embeding of a data point</figcaption>-->
-        </figure>
+      <!--<figure style="grid-column: page">-->
+        <!--<img src="exemplar-vae-training.png" style="margin: 0;"/>-->
+          <!--&lt;!&ndash;<figcaption> Training procedure of exemplar vae. The new prior distribution is mixture of gaussian where each mixture is latent embeding of a data point</figcaption>&ndash;&gt;-->
+        <!--</figure>-->
       <h2>Experiments</h2>
+      <img src="full_generation.png" style="width: 100%; margin-top: 1rem;"/>
+
       <p>
         To assess the effectiveness of Exemplar VAEs we conduct three sets of
         experiments, on density estimation, represenation learning, and
@@ -331,6 +335,7 @@
           Samples
       </h3>
       <figure  style="grid-column: text">
+          <img src="celebA_exemplar_generation.png" style="width: 100%; display: block; margin-left: auto; margin-right: auto;"/>
           <img src="exemplar_generation.png" style="width: 100%; display: block; margin-left: auto; margin-right: auto;"/>
       </figure>
 
