@@ -69,65 +69,65 @@
         <img src="augmentation.gif" style="width: 67%; display: block; margin-left: auto;  margin-right: auto;"/>
 
       </d-contents>
-    <!--<h2>Motivation</h2>-->
+    <h2>Motivation</h2>
 
-        <!--<figure style="grid-column: kicker  ">-->
-            <!--<img src="water_lilies.jpg" style="width: 100%; max-width: 204px;"/>-->
-              <!--<figcaption> First google search result. Nice job!</figcaption>-->
-        <!--</figure>-->
-    <!--<p>-->
-      <!--Consider the problem of conditional image generation, given a natural-->
-      <!--language description of a scene such as:-->
-        <!--<br/> ''A woman is staring at Monet's Water Lilies''.</br>-->
-      <!--There are two general classes of methods for addressing this problem.-->
-      <!--One can resort to <em>exemplar based methods</em>, e.g., using web search engines to-->
-      <!--<a href="https://www.google.ca/search?tbm=isch&q=a+woman+is+staring+at+monet%27s+water+lilies&oq=a+woman+staring+at+Monet\%27s+Water+Lilies">retrieve photographs with similar captions</a>,-->
-      <!--and then editing the retrieved images to generate new ones.-->
-      <!--Alternatively, one can adopt <em>parametric models</em> such as deep neural-->
-      <!--networks optimized for text to image translation to synthesize new relevant scenes.-->
-    <!--</p>-->
-    <!--<p>-->
-        <!--Exemplar based methods depend on large and diverse datasets of-->
-        <!--exemplars and relatively simple machine learning algorithms, such as-->
-        <!--Parzen window-->
-        <!--estimation <d-cite key="parzen1962estimation"></d-cite> and-->
-        <!--conditional random fields <d-cite key="lafferty2001conditional"></d-cite>. They deliver-->
-        <!--impressive results on texture synthesis <d-cite key="efros1999texture"></d-cite>, image-->
-        <!--super resolution <d-cite key="freeman2002example"></d-cite>, and-->
-        <!--inpaiting <d-cite key="criminisi2003object, hays2007scene"></d-cite>, despite their-->
-        <!--simplicity. These techniques can accommodate web scale datasets with-->
-        <!--a improvement in sample quality as the dataset size increases, without-->
-        <!--the need for further optimization of model parameters. The success of-->
-        <!--exemplar based methods hinges on the distance metric used to build a-->
-        <!--local density model for each neighborhood. Further,-->
-        <!--while exemplar based methods excel in interpolation tasks, they often-->
-        <!--underperform their parametric counterparts in extrapolation.-->
-    <!--</p>-->
-      <!--<p>-->
-        <!--Parametric generative models based on deep neural nets enable learning-->
-        <!--complex data distributions across myriad problem-->
-        <!--domains (e.g., <d-cite key="oord2016wavenet, reed2016generative"></d-cite>).-->
-        <!--Predominant models, such as Variational Autoencoders-->
-        <!--(VAEs)<d-cite key="kingma2013auto,rezende2014stochastic"></d-cite>, Normalizing-->
-        <!--Flows<d-cite key="dinh2014nice, dinh2016density"></d-cite>, and Generative Adversarial-->
-        <!--Networks (GANs) <d-cite key="goodfellow2014generative"></d-cite>, adopt a decoder-->
-        <!--network to convert samples from a prior distribution, often a factored-->
-        <!--Gaussian, into samples from the target distribution.  After the-->
-        <!--completion of training, these models discard the training data and-->
-        <!--generate new samples using decoder networks alone. Hence, the burden-->
-        <!--of generative modeling rests entirely on the parametric-->
-        <!--model. Further, with the availability of additional training data,-->
-        <!--these models require re-training or fine-tuning.-->
-    <!--</p>-->
-      <!--<p>-->
-      <!--This work presents a probabilistic framework for exemplar based-->
-      <!--generative modeling using expressive neural nets. This framework-->
-      <!--combines the advantages of both exemplar based and parametric methods-->
-      <!--in a principled way and achieves superior results. We focus on simple-->
-      <!--unconditional generation tasks here, but the learning formulation and-->
-      <!--the methods developed are applicable to other applications including-->
-      <!--text to image translation and language modeling.-->
-    <!--</p>-->
+        <figure style="grid-column: kicker  ">
+            <img src="water_lilies.jpg" style="width: 100%; max-width: 204px;"/>
+              <figcaption> First google search result. Nice job!</figcaption>
+        </figure>
+    <p>
+      Consider the problem of conditional image generation, given a natural
+      language description of a scene such as:
+        <br/> ''A woman is staring at Monet's Water Lilies''.</br>
+      There are two general classes of methods for addressing this problem.
+      One can resort to <em>exemplar based methods</em>, e.g., using web search engines to
+      <a href="https://www.google.ca/search?tbm=isch&q=a+woman+is+staring+at+monet%27s+water+lilies&oq=a+woman+staring+at+Monet\%27s+Water+Lilies">retrieve photographs with similar captions</a>,
+      and then editing the retrieved images to generate new ones.
+      Alternatively, one can adopt <em>parametric models</em> such as deep neural
+      networks optimized for text to image translation to synthesize new relevant scenes.
+    </p>
+    <p>
+        Exemplar based methods depend on large and diverse datasets of
+        exemplars and relatively simple machine learning algorithms, such as
+        Parzen window
+        estimation <d-cite key="parzen1962estimation"></d-cite> and
+        conditional random fields <d-cite key="lafferty2001conditional"></d-cite>. They deliver
+        impressive results on texture synthesis <d-cite key="efros1999texture"></d-cite>, image
+        super resolution <d-cite key="freeman2002example"></d-cite>, and
+        inpaiting <d-cite key="criminisi2003object, hays2007scene"></d-cite>, despite their
+        simplicity. These techniques can accommodate web scale datasets with
+        a improvement in sample quality as the dataset size increases, without
+        the need for further optimization of model parameters. The success of
+        exemplar based methods hinges on the distance metric used to build a
+        local density model for each neighborhood. Further,
+        while exemplar based methods excel in interpolation tasks, they often
+        underperform their parametric counterparts in extrapolation.
+    </p>
+      <p>
+        Parametric generative models based on deep neural nets enable learning
+        complex data distributions across myriad problem
+        domains (e.g., <d-cite key="oord2016wavenet, reed2016generative"></d-cite>).
+        Predominant models, such as Variational Autoencoders
+        (VAEs)<d-cite key="kingma2013auto,rezende2014stochastic"></d-cite>, Normalizing
+        Flows<d-cite key="dinh2014nice, dinh2016density"></d-cite>, and Generative Adversarial
+        Networks (GANs) <d-cite key="goodfellow2014generative"></d-cite>, adopt a decoder
+        network to convert samples from a prior distribution, often a factored
+        Gaussian, into samples from the target distribution.  After the
+        completion of training, these models discard the training data and
+        generate new samples using decoder networks alone. Hence, the burden
+        of generative modeling rests entirely on the parametric
+        model. Further, with the availability of additional training data,
+        these models require re-training or fine-tuning.
+    </p>
+      <p>
+      This work presents a probabilistic framework for exemplar based
+      generative modeling using expressive neural nets. This framework
+      combines the advantages of both exemplar based and parametric methods
+      in a principled way and achieves superior results. We focus on simple
+      unconditional generation tasks here, but the learning formulation and
+      the methods developed are applicable to other applications including
+      text to image translation and language modeling.
+    </p>
     <!--<p>-->
         <!--This paper investigates a general framework for <em> exemplar-->
         <!--based generative modeling </em> and a particular instantiation of this-->
