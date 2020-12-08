@@ -42,7 +42,7 @@
       {
         "author":"David Fleet",
         "authorURL":"http://www.cs.toronto.edu/~fleet/",
-        "affiliations": [{"name": "University of Toronto <br> Vector Institute", "url": "http://www.cs.toronto.edu"}]
+          "affiliations": [{"name": "University of Toronto", "url": "http://www.cs.toronto.edu"}, {"name": "Vector Instuite", "url": "https://vectorinstitute.ai/"}]
       },
       {
         "author":"Mohammad Norouzi",
@@ -61,23 +61,41 @@
   <d-title>
     <p>
       Linking Generative Models, Nearest Neighbor Retreival, and Data Augmentation
-      <a href='https://github.com/sajadn/Exemplar-VAE'><b>[code]</b></a>
-      <a href='https://nips.cc/virtual/2020/public/poster_63c17d596f401acb520efe4a2a7a01ee.html'><b>[NeurIPS-2020 link]</b></a>
+      <a href='https://nips.cc/virtual/2020/public/poster_63c17d596f401acb520efe4a2a7a01ee.html'><b>[NeurIPS 2020 link]</b></a>
+      <a href='https://github.com/sajadn/Exemplar-VAE'><b>[Code]</b></a>
     </p>
   </d-title>
   <d-byline></d-byline>
   <d-article>
-
-    <!-- <a class="marker" href="#section-1" id="section-1"><span>1</span></a> -->
-      <d-contents>
-        <img src="exemplar-vae-generation.svg" style="width: 90%; display: block; margin-left: auto;  margin-right: auto;"/>	
-        <!-- <img src="augmentation.gif" style="width: 67%; display: block; margin-left: auto;  margin-right: auto;"/> -->
-      </d-contents>
+    <d-contents>
+      <img src="exemplar-vae-generation.svg" style="float:left; width: 90%; display: block;"/>	
+    </d-contents>
+    <h2>Abstract</h2>
+    <p>
+We introduce Exemplar VAEs, a family of generative models that bridge
+the gap between <em>parametric</em> and <em>non-parametric, exemplar
+based</em> generative models.  Exemplar VAE is a variant of VAE with a
+non-parametric prior in the latent space based on a Parzen window
+estimator.  To sample from it, one first draws a random exemplar from
+a training set, then stochastically transforms that exemplar into a
+latent code and a new observation.  We propose retrieval augmented
+training (RAT) as a way to speed up Exemplar VAE training by using
+approximate nearest neighbor search in the latent space to define a
+lower bound on log marginal likelihood.  To enhance generalization,
+model parameters are learned using exemplar leave-one-out and
+subsampling.  Experiments demonstrate the effectiveness of Exemplar
+VAEs on density estimation and representation learning.  Importantly,
+generative data augmentation using Exemplar VAEs on permutation
+invariant MNIST and Fashion MNIST reduces classification error of
+simple MLPs from 1.17% to 0.69% and from 8.56% to 8.16%.
+    <d-contents>
+      <img src="augmentation.gif" style="width: 50%; display: block; margin-left: auto;  margin-right: auto;"/>
+    </d-contents>
+    </p>
     <h2>Motivation</h2>
-
-        <figure style="grid-column: kicker  ">
-            <img src="water_lilies.jpg" style="width: 100%; max-width: 204px;"/>
-              <figcaption> First google search result for ''A woman is staring at Monet's Water Lilies''. </figcaption>
+        <figure style="grid-column: kicker ">
+            <img src="water_lilies.jpg" style="width: 100%; max-width: 150px; margin-left: auto;  margin-right: auto; display: block;"/>
+              <figcaption> First Google image search result for <a href="https://www.google.ca/search?tbm=isch&q=a+woman+is+staring+at+monet%27s+water+lilies&oq=a+woman+staring+at+Monet\%27s+Water+Lilies">''A woman is staring at Monet's Water Lilies''</a>. </figcaption>
         </figure>
     <p>
       Consider the problem of conditional image generation, given a natural
@@ -89,8 +107,8 @@
       and then editing the retrieved images to generate new ones.
       Alternatively, one can adopt <em>parametric models</em> such as deep neural
       networks optimized for text to image translation to synthesize new relevant scenes.
-    </p>
-    <p>
+      <br>
+      <br>
         Exemplar based methods depend on large and diverse datasets of
         exemplars and relatively simple machine learning algorithms, such as
         Parzen window
@@ -277,7 +295,6 @@
           <!--&lt;!&ndash;<figcaption> Training procedure of exemplar vae. The new prior distribution is mixture of gaussian where each mixture is latent embeding of a data point</figcaption>&ndash;&gt;-->
         <!--</figure>-->
       <h2>Experiments</h2>
-      <img src="augmentation.gif" style="width: 40%; display: block; margin-left: auto;  margin-right: auto;"/>
       <img src="full_generation.png" style="width: 100%; margin-top: 1rem;"/>
 
       <p>
